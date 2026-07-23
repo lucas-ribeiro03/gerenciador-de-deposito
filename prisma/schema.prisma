@@ -1,0 +1,131 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  ADMIN
+  EMPLOYEE
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  OUT_FOR_DELIVERY
+  DELIVERED
+  CANCELLED
+}
+
+enum DeliveryType {
+  DELIVERY
+  PICKUP
+}
+
+enum PaymentMethod {
+  PIX
+  CREDIT_CARD
+  DEBIT_CARD
+  MONEY
+}
+
+model Product {
+  id               String   @id @default(cuid())
+  name             String
+  description      String?
+  categoryId       String
+  price            Decimal  @db.Decimal(10, 2)
+  promotionalPrice Decimal? @db.Decimal(10, 2)
+  imageKey         String
+  isAvailable      Boolean  @default(true)
+  isPackable       Boolean  @default(false)
+  packQuantity     Int?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  orderItems OrderItem[]
+}
+
+model User {
+  id       String   @id @default(cuid())
+  name     String
+  email    String   @unique
+  phone    String
+  password String
+  role     UserRole @default(EMPLOYEE)
+
+  createdAt DateTime @default(now())
+
+  addresses Address[]
+  orders    Order[]
+}
+
+model Order {
+  id String @id @default(cuid())
+
+  userId    String
+  addressId String?
+
+  status       OrderStatus  @default(PENDING)
+  deliveryType DeliveryType
+
+  paymentMethod PaymentMethod
+
+  subtotal    Decimal @db.Decimal(10, 2)
+  deliveryFee Decimal @db.Decimal(10, 2)
+  discount    Decimal @db.Decimal(10, 2)
+  total       Decimal @db.Decimal(10, 2)
+
+  createdAt DateTime @default(now())
+
+  user    User     @relation(fields: [userId], references: [id])
+  address Address? @relation(fields: [addressId], references: [id])
+
+  items OrderItem[]
+}
+
+model OrderItem {
+  id String @id @default(cuid())
+
+  orderId   String
+  productId String
+
+  quantity Int
+
+  unitPrice Decimal @db.Decimal(10, 2)
+  total     Decimal @db.Decimal(10, 2)
+
+  order   Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id])
+}
+
+model Address {
+  id String @id @default(cuid())
+
+  userId String
+
+  street     String
+  number     String
+  district   String
+  zipCode    String
+  complement String?
+
+  latitude  Decimal @db.Decimal(10, 8)
+  longitude Decimal @db.Decimal(11, 8)
+
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  orders Order[]
+}
+
+model Settings {
+  id        String  @id @default(cuid())
+  isOpen    Boolean @default(true)
+  openTime  String?
+  closeTime String?
+}
