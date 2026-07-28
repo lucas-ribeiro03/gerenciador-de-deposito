@@ -56,7 +56,7 @@ model User {
   email    String   @unique
   phone    String
   password String
-  role     UserRole @default(EMPLOYEE)
+  role     UserRole @default(CLIENT)
 
   createdAt DateTime @default(now())
 

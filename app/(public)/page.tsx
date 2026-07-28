@@ -1,12 +1,17 @@
-import { Container } from "@/components/layout/container";
-import { PageTitle } from "@/components/layout/page-title";
+import { Hero } from "@/components/home/hero";
+import { ProductsGrid } from "@/components/home/product-grid";
+import { ProductFilters } from "@/components/home/products-filter";
+import { Footer } from "@/components/layout/footer";
+import { Navbar } from "@/components/navbar/navbar";
 
 export default function HomePage() {
   return (
-    <Container className="py-8">
-      <PageTitle>Point do Grell</PageTitle>
-
-      <p className="mt-2 text-muted-foreground">Seu depósito de bebidas.</p>
-    </Container>
+    <>
+      <Navbar />
+      <Hero />
+      <ProductFilters />
+      <ProductsGrid />
+      <Footer />
+    </>
   );
 }

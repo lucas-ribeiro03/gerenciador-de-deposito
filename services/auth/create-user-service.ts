@@ -35,7 +35,6 @@ export async function createUserService({
       email,
       phone,
       password: hashedPassword,
-      role: "CLIENT",
     },
   });
 

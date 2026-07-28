@@ -30,7 +30,8 @@ export async function registerAction(
       phone: parsed.data.phone,
       password: parsed.data.password,
     });
-  } catch {
+  } catch (e) {
+    console.log(e);
     return {
       success: false,
       message: "Erro ao criar conta.",

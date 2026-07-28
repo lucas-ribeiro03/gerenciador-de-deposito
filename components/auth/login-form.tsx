@@ -1,15 +1,26 @@
 "use client";
 
-import { loginAction } from "@/actions/auth/login-action";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
+
+import { loginAction } from "@/actions/auth/login-action";
+import { Logo } from "@/components/layout/logo";
+import { FieldError } from "@/components/common/field-error";
+import { SubmitButton } from "@/components/common/submit-button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { loginSchema, type LoginSchema } from "@/schemas/auth/login-schema";
-import { SubmitButton } from "../common/submit-button";
-import { FieldError } from "../common/field-error";
 
 export function LoginForm() {
   const router = useRouter();
@@ -37,40 +48,69 @@ export function LoginForm() {
     router.push("/");
     router.refresh();
   }
+
   return (
-    <FormProvider {...form}>
-      <form
-        onSubmit={form.handleSubmit(handleLogin)}
-        className="flex flex-col gap-4"
-      >
-        <div className="space-y-2">
-          <Label htmlFor="email">E-mail</Label>
+    <main className="flex min-h-screen items-center justify-center bg-background px-4 py-8">
+      <Card className="w-full max-w-md shadow-xl">
+        <CardHeader className="space-y-6">
+          <Logo className="mx-auto rounded-lg" h={80} w={80} />
 
-          <Input
-            id="email"
-            type="email"
-            placeholder="Digite seu e-mail"
-            {...form.register("email")}
-          />
+          <div className="space-y-2 text-center">
+            <CardTitle className="text-3xl">Bem-vindo</CardTitle>
 
-          <FieldError message={form.formState.errors.email?.message} />
-        </div>
+            <CardDescription>Entre para acessar sua conta.</CardDescription>
+          </div>
+        </CardHeader>
 
-        <div className="space-y-2">
-          <Label htmlFor="password">Senha</Label>
+        <CardContent>
+          <FormProvider {...form}>
+            <form
+              onSubmit={form.handleSubmit(handleLogin)}
+              className="space-y-5"
+            >
+              <div className="space-y-2">
+                <Label htmlFor="email">E-mail</Label>
 
-          <Input
-            id="password"
-            type="password"
-            placeholder="Digite sua senha"
-            {...form.register("password")}
-          />
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="Digite seu e-mail"
+                  {...form.register("email")}
+                />
 
-          <FieldError message={form.formState.errors.password?.message} />
-        </div>
+                <FieldError message={form.formState.errors.email?.message} />
+              </div>
 
-        <SubmitButton loadingText="Entrando...">Entrar</SubmitButton>
-      </form>
-    </FormProvider>
+              <div className="space-y-2">
+                <Label htmlFor="password">Senha</Label>
+
+                <Input
+                  id="password"
+                  type="password"
+                  placeholder="Digite sua senha"
+                  {...form.register("password")}
+                />
+
+                <FieldError message={form.formState.errors.password?.message} />
+              </div>
+
+              <SubmitButton loadingText="Entrando...">Entrar</SubmitButton>
+            </form>
+          </FormProvider>
+        </CardContent>
+
+        <CardFooter className="justify-center">
+          <p className="text-center text-sm text-muted-foreground">
+            Não possui uma conta?{" "}
+            <Link
+              href="/register"
+              className="font-medium text-primary hover:underline"
+            >
+              Cadastre-se
+            </Link>
+          </p>
+        </CardFooter>
+      </Card>
+    </main>
   );
 }
