@@ -26,7 +26,7 @@ export function ProductCard({
   return (
     <Card className="group overflow-hidden py-0">
       <Link href={`/products/${id}`}>
-        <ProductImage src={imageUrl} alt={name} />
+        {/* <ProductImage src={imageUrl} alt={name} /> */}
       </Link>
 
       <CardContent className="flex flex-col gap-4 p-4">
