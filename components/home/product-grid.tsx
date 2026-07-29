@@ -69,10 +69,10 @@ const products = [
 
 export function ProductsGrid() {
   return (
-    <section className="mx-auto w-full max-w-7xl px-4 py-12">
+    <section className="mx-auto w-full max-w-7xl px-4 py-12 bg-background">
       <div className="mb-8 flex items-end justify-between">
         <div>
-          <h2 className="text-3xl font-bold">Produtos</h2>
+          <h2 className="text-3xl font-bold text-foreground">Produtos</h2>
 
           <p className="mt-2 text-muted-foreground">
             Confira os produtos disponíveis.

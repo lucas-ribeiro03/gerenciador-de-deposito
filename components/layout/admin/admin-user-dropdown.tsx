@@ -28,13 +28,11 @@ export function AdminUserDropdown() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <button className="cursor-pointer outline-none">
-          <Avatar>
-            <AvatarFallback>
-              <User className="size-5" />
-            </AvatarFallback>
-          </Avatar>
-        </button>
+        <Avatar>
+          <AvatarFallback>
+            <User className="size-5" />
+          </AvatarFallback>
+        </Avatar>
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="end" className="w-56">

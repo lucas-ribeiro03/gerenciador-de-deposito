@@ -11,7 +11,7 @@ export function SearchProducts() {
 
       <Input
         placeholder="Buscar cerveja, refrigerante, whisky..."
-        className="h-12 rounded-full pr-4 pl-12 text-base shadow-lg"
+        className="h-12 rounded-full pr-4 pl-12 text-base shadow-lg bg-brand border-border text-foreground placeholder:text-muted-foreground focus-visible:ring-brand-gold/50"
       />
     </div>
   );

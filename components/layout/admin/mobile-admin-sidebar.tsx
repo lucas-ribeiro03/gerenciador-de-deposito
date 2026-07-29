@@ -4,7 +4,6 @@ import Link from "next/link";
 
 import { Beer, Menu } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
 import {
   Sheet,
   SheetContent,
@@ -19,12 +18,10 @@ export function MobileAdminSidebar() {
   return (
     <Sheet>
       <SheetTrigger>
-        <Button variant="ghost" size="icon" className="lg:hidden">
-          <Menu className="size-5" />
-        </Button>
+        <Menu className="size-5" />
       </SheetTrigger>
 
-      <SheetContent side="left" className="w-72 p-0">
+      <SheetContent side="left" className="flex w-72 flex-col p-0">
         <SheetHeader className="border-b p-6">
           <SheetTitle>
             <Link href="/admin" className="flex items-center gap-2">
@@ -35,8 +32,14 @@ export function MobileAdminSidebar() {
           </SheetTitle>
         </SheetHeader>
 
-        <div className="p-4">
+        <div className="flex-1 overflow-y-auto p-4">
           <AdminNav />
+        </div>
+
+        <div className="border-t p-4">
+          <p className="text-center text-xs text-muted-foreground">
+            Versão 1.0.0
+          </p>
         </div>
       </SheetContent>
     </Sheet>

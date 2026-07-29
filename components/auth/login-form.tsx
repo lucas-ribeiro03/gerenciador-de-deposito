@@ -51,14 +51,22 @@ export function LoginForm() {
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-background px-4 py-8">
-      <Card className="w-full max-w-md shadow-xl">
+      <Card className="w-full max-w-md border-primary/10 bg-card shadow-2xl">
         <CardHeader className="space-y-6">
-          <Logo className="mx-auto rounded-lg" h={80} w={80} />
+          <Logo
+            className="mx-auto rounded-xl ring-2 ring-primary/20"
+            h={80}
+            w={80}
+          />
 
           <div className="space-y-2 text-center">
-            <CardTitle className="text-3xl">Bem-vindo</CardTitle>
+            <CardTitle className="text-3xl font-bold text-foreground">
+              Bem-vindo
+            </CardTitle>
 
-            <CardDescription>Entre para acessar sua conta.</CardDescription>
+            <CardDescription className="text-muted-foreground">
+              Entre para acessar sua conta.
+            </CardDescription>
           </div>
         </CardHeader>
 
@@ -69,7 +77,9 @@ export function LoginForm() {
               className="space-y-5"
             >
               <div className="space-y-2">
-                <Label htmlFor="email">E-mail</Label>
+                <Label htmlFor="email" className="font-medium text-foreground">
+                  E-mail
+                </Label>
 
                 <Input
                   id="email"
@@ -82,7 +92,12 @@ export function LoginForm() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="password">Senha</Label>
+                <Label
+                  htmlFor="password"
+                  className="font-medium text-foreground"
+                >
+                  Senha
+                </Label>
 
                 <Input
                   id="password"
@@ -99,12 +114,12 @@ export function LoginForm() {
           </FormProvider>
         </CardContent>
 
-        <CardFooter className="justify-center">
+        <CardFooter className="justify-center border-t border-border/50 pt-6">
           <p className="text-center text-sm text-muted-foreground">
             Não possui uma conta?{" "}
             <Link
               href="/register"
-              className="font-medium text-primary hover:underline"
+              className="font-semibold text-primary transition-colors hover:text-accent hover:underline"
             >
               Cadastre-se
             </Link>

@@ -7,6 +7,7 @@ import { logoutAction } from "@/actions/auth/logout-action";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
@@ -19,29 +20,32 @@ export function UserDropdown() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <button className="cursor-pointer outline-none">
-          <Avatar>
-            <AvatarFallback>
-              <User className="size-5" />
-            </AvatarFallback>
-          </Avatar>
-        </button>
+        <Avatar>
+          <AvatarFallback>
+            <User className="size-5" />
+          </AvatarFallback>
+        </Avatar>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent align="end" className="w-56">
-        <DropdownMenuLabel>Minha conta</DropdownMenuLabel>
+      <DropdownMenuContent
+        align="center"
+        className="w-56 rounded-xl border border-border bg-popover backdrop-blur-xl shadow-xl text-popover-foreground"
+      >
+        <DropdownMenuGroup>
+          <DropdownMenuLabel>Minha conta</DropdownMenuLabel>
 
-        <DropdownMenuSeparator />
+          <DropdownMenuSeparator className="w-full h-[0.5px] bg-border" />
 
-        <DropdownMenuItem>
-          <User className="mr-2 size-4" />
-          Meu Perfil
-        </DropdownMenuItem>
+          <DropdownMenuItem>
+            <User className="mr-2 size-4" />
+            Meu Perfil
+          </DropdownMenuItem>
 
-        <DropdownMenuItem>
-          <Package className="mr-2 size-4" />
-          Meus Pedidos
-        </DropdownMenuItem>
+          <DropdownMenuItem>
+            <Package className="mr-2 size-4" />
+            Meus Pedidos
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
 
         <DropdownMenuSeparator />
 

@@ -1,66 +1,172 @@
 @import "tailwindcss";
 
+/* ==========================================
+   LIGHT THEME
+========================================== */
+
 :root {
-  :root {
-    /* Base */
-    --background: #f8f8f8;
-    --foreground: #1a1a1a;
+  color-scheme: light;
 
-    /* Cards */
-    --card: #ffffff;
-    --card-foreground: #1a1a1a;
+  /* Base */
+  --background: #f8f8f8;
+  --foreground: #1a1a1a;
 
-    /* Popover */
-    --popover: #ffffff;
-    --popover-foreground: #1a1a1a;
+  /* Surfaces */
+  --card: #ffffff;
+  --card-foreground: #1a1a1a;
 
-    /* Brand */
-    --primary: #e5a11a;
-    --primary-foreground: #ffffff;
+  --popover: #ffffff;
+  --popover-foreground: #1a1a1a;
 
-    --secondary: #f3c64d;
-    --secondary-foreground: #1a1a1a;
+  /* Brand */
+  --primary: #e5a11a;
+  --primary-foreground: #ffffff;
 
-    --accent: #d67c12;
-    --accent-foreground: #ffffff;
+  --secondary: #f3c64d;
+  --secondary-foreground: #1a1a1a;
 
-    /* Support */
-    --muted: #f2f2f2;
-    --muted-foreground: #6b7280;
+  --accent: #d67c12;
+  --accent-foreground: #ffffff;
 
-    --destructive: #dc2626;
-    --destructive-foreground: #ffffff;
+  /* Feedback */
+  --success: #16a34a;
+  --warning: #f59e0b;
+  --info: #2563eb;
 
-    /* Borders */
-    --border: #dedede;
-    --input: #dedede;
-    --ring: #e5a11a;
+  --destructive: #dc2626;
+  --destructive-foreground: #ffffff;
 
-    /* Extra */
-    --success: #16a34a;
-    --warning: #f59e0b;
-    --info: #2563eb;
+  /* Neutral */
+  --muted: #f2f2f2;
+  --muted-foreground: #6b7280;
 
-    /* Brand Extras */
-    --brand-dark: #231f20;
-    --brand-black: #101010;
-    --brand-gold: #e5a11a;
-    --brand-gold-light: #f4c74b;
-    --brand-orange: #d67c12;
-    --brand-brown: #5a3413;
+  /* Borders */
+  --border: #dedede;
+  --input: #dedede;
+  --ring: #e5a11a;
 
-    --radius: 0.75rem;
-  }
+  /* Brand Extras */
+  --brand-dark: #231f20;
+  --brand-black: #101010;
+  --brand-gold: #e5a11a;
+  --brand-gold-light: #f4c74b;
+  --brand-orange: #d67c12;
+  --brand-brown: #5a3413;
+
+  --radius: 0.75rem;
 }
 
-@theme inline {
+/* ==========================================
+   DARK THEME
+========================================== */
+
+.dark {
+  color-scheme: dark;
+
+  /* Base */
+  --background: #161616;
+  --foreground: #f5f5f5;
+
+  /* Surfaces */
+  --card: #202020;
+  --card-foreground: #f5f5f5;
+
+  --popover: #242424;
+  --popover-foreground: #f5f5f5;
+
+  /* Brand */
+  --primary: #e5a11a;
+  --primary-foreground: #ffffff;
+
+  --secondary: #f3c64d;
+  --secondary-foreground: #101010;
+
+  --accent: #d67c12;
+  --accent-foreground: #ffffff;
+
+  /* Feedback */
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --info: #3b82f6;
+
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+
+  /* Neutral */
+  --muted: #2a2a2a;
+  --muted-foreground: #a3a3a3;
+
+  /* Borders */
+  --border: #333333;
+  --input: #333333;
+  --ring: #e5a11a;
+
+  /* Brand Extras */
+  --brand-dark: #101010;
+  --brand-black: #080808;
+  --brand-gold: #e5a11a;
+  --brand-gold-light: #f4c74b;
+  --brand-orange: #d67c12;
+  --brand-brown: #6b3d14;
+}
+
+/* ==========================================
+   TAILWIND TOKENS
+========================================== */
+
+@theme {
+  /* Base */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  /* Surfaces */
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+
+  /* Brand */
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  /* Feedback */
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-info: var(--info);
+
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+
+  /* Neutral */
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  /* Borders */
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Brand Extras */
   --color-brand-dark: var(--brand-dark);
   --color-brand-black: var(--brand-black);
   --color-brand-gold: var(--brand-gold);
   --color-brand-gold-light: var(--brand-gold-light);
   --color-brand-orange: var(--brand-orange);
   --color-brand-brown: var(--brand-brown);
+
+  --radius: var(--radius);
 }
+
+/* ==========================================
+   GLOBAL
+========================================== */
 
 * {
   border-color: var(--border);

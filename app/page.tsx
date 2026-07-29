@@ -1,9 +1,8 @@
-import Image from "next/image";
 import HomePage from "./(public)/page";
 
 export default function Home() {
   return (
-    <div className="">
+    <div className="bg-background text-foreground">
       <HomePage />
     </div>
   );

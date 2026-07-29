@@ -30,10 +30,8 @@ type MobileSidebarProps = {
 export function MobileSidebar({ isAuthenticated }: MobileSidebarProps) {
   return (
     <Sheet>
-      <SheetTrigger>
-        <Button variant="ghost" size="icon" className="lg:hidden">
-          <Menu />
-        </Button>
+      <SheetTrigger className={"lg:hidden"}>
+        <Menu />
       </SheetTrigger>
 
       <SheetContent side="left" className="w-80">
