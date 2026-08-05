@@ -38,13 +38,14 @@ enum PaymentMethod {
 }
 
 model Product {
-  id               String   @id @default(cuid())
+  id               String   @id @default(uuid())
   name             String
   description      String?
   categoryId       String
   price            Decimal  @db.Decimal(10, 2)
   promotionalPrice Decimal? @db.Decimal(10, 2)
-  imageKey         String
+  imageUrl         String
+  imagePublicId    String
   isAvailable      Boolean  @default(true)
   isPackable       Boolean  @default(false)
   packQuantity     Int?
@@ -58,7 +59,7 @@ model Product {
 }
 
 model User {
-  id       String   @id @default(cuid())
+  id       String   @id @default(uuid())
   name     String
   email    String   @unique
   phone    String
@@ -96,7 +97,7 @@ model Order {
 }
 
 model OrderItem {
-  id String @id @default(cuid())
+  id String @id @default(uuid())
 
   orderId   String
   productId String
@@ -111,7 +112,7 @@ model OrderItem {
 }
 
 model Address {
-  id String @id @default(cuid())
+  id String @id @default(uuid())
 
   userId String
 
@@ -146,7 +147,7 @@ model Category {
 }
 
 model Settings {
-  id        String  @id @default(cuid())
+  id        String  @id @default(uuid())
   isOpen    Boolean @default(true)
   openTime  String?
   closeTime String?

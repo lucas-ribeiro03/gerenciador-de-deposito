@@ -9,13 +9,13 @@ export default auth((req) => {
   const isAdminRoute = nextUrl.pathname.startsWith("/admin");
   const isLoginRoute = nextUrl.pathname === "/login";
 
-  console.log(req.auth?.user.role);
-
   if (isAdminRoute && !isAuthenticated) {
     return NextResponse.redirect(new URL("/login", nextUrl));
   }
 
   if (isAdminRoute && req.auth?.user.role !== "ADMIN") {
+    console.log(isAdminRoute);
+    console.log(req.auth?.user.role);
     return NextResponse.redirect(new URL("/", nextUrl));
   }
 

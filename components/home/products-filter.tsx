@@ -9,23 +9,13 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import type { Category } from "@prisma/client";
 
-const categories = [
-  "Todas",
-  "Cervejas",
-  "Refrigerantes",
-  "Destilados",
-  "Whisky",
-  "Vodka",
-  "Gin",
-  "Vinhos",
-  "Energéticos",
-  "Sucos",
-  "Águas",
-  "Gelo",
-];
+type ProductFiltersProps = {
+  categories: Category[];
+};
 
-export function ProductFilters() {
+export function ProductFilters({ categories }: ProductFiltersProps) {
   return (
     <section className="sticky top-16 z-40 border-b border-border bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/80">
       <div className="mx-auto flex h-16 max-w-7xl items-center gap-3 overflow-x-auto px-4 scrollbar-none">
@@ -39,7 +29,9 @@ export function ProductFilters() {
 
           <DropdownMenuContent align="start">
             {categories.map((category) => (
-              <DropdownMenuItem key={category}>{category}</DropdownMenuItem>
+              <DropdownMenuItem key={category.id}>
+                {category.name}
+              </DropdownMenuItem>
             ))}
           </DropdownMenuContent>
         </DropdownMenu>

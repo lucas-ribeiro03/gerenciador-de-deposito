@@ -7,7 +7,7 @@ import { useFormContext } from "react-hook-form";
 
 type SubmitButtonProps = {
   children: React.ReactNode;
-  loadingText?: string;
+  loadingText?: React.ReactNode;
 };
 
 export function SubmitButton({

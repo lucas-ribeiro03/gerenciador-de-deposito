@@ -6,20 +6,26 @@ type ProductPriceProps = {
 };
 
 export function ProductPrice({ price, promotionalPrice }: ProductPriceProps) {
-  if (!promotionalPrice) {
-    return (
-      <p className="text-xl font-bold text-primary">{formatCurrency(price)}</p>
-    );
-  }
+  // if (!promotionalPrice) {
+  //   return (
+  //     <p className="text-xl font-bold text-primary">{formatCurrency(price)}</p>
+  //   );
+  // }
 
   return (
     <div className="flex flex-col">
-      <span className="text-sm text-muted-foreground line-through">
+      <span
+        className={
+          promotionalPrice
+            ? `text-sm text-muted-foreground line-through`
+            : "text-xl font-bold text-primary"
+        }
+      >
         {formatCurrency(price)}
       </span>
 
       <span className="text-xl font-bold text-primary">
-        {formatCurrency(promotionalPrice)}
+        {promotionalPrice ? formatCurrency(promotionalPrice) : ""}
       </span>
     </div>
   );
