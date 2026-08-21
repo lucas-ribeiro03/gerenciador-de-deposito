@@ -21,9 +21,14 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { loginSchema, type LoginSchema } from "@/schemas/auth/login-schema";
+import { useSession } from "next-auth/react";
+import { useSearchParams } from "next/navigation";
 
 export function LoginForm() {
   const router = useRouter();
+  const { update } = useSession();
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") ?? "/";
 
   const form = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
@@ -43,12 +48,12 @@ export function LoginForm() {
       return;
     }
 
+    await update();
+
     toast.success(response.message);
 
-    router.push("/");
-    router.refresh();
+    router.push(callbackUrl);
   }
-
   return (
     <main className="flex min-h-screen items-center justify-center bg-background px-4 py-8">
       <Card className="w-full max-w-md border-primary/10 bg-card shadow-2xl">
