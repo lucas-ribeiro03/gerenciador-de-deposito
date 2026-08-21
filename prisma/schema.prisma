@@ -116,14 +116,15 @@ model Address {
 
   userId String
 
+  title     String?
+
   street     String
   number     String
   district   String
   zipCode    String
   complement String?
 
-  latitude  Decimal @db.Decimal(10, 8)
-  longitude Decimal @db.Decimal(11, 8)
+  lastUsedAt DateTime? 
 
   createdAt DateTime @default(now())
 
