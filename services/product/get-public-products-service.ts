@@ -1,13 +1,39 @@
 import { prisma } from "@/prisma/prisma";
 
-export async function getPublicProductsService() {
+type GetPublicProductsServiceRequest = {
+  category?: string;
+  promotion?: boolean;
+  search?: string;
+};
+
+export async function getPublicProductsService({
+  category,
+  promotion,
+  search,
+}: GetPublicProductsServiceRequest) {
   return prisma.product.findMany({
     where: {
       isAvailable: true,
 
-      category: {
-        status: "ACTIVE",
-      },
+      ...(search && {
+        name: {
+          contains: search,
+          mode: "insensitive",
+        },
+      }),
+
+      ...(category && {
+        category: {
+          slug: category,
+          status: "ACTIVE",
+        },
+      }),
+
+      ...(promotion && {
+        promotionalPrice: {
+          not: null,
+        },
+      }),
     },
 
     include: {

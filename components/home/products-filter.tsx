@@ -10,12 +10,45 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import type { Category } from "@prisma/client";
-
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 type ProductFiltersProps = {
   categories: Category[];
+  selectedCategory: string;
 };
 
-export function ProductFilters({ categories }: ProductFiltersProps) {
+export function ProductFilters({
+  categories,
+  selectedCategory,
+}: ProductFiltersProps) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const isPromotionSelected = searchParams.get("promotion") === "true";
+  function togglePromotion() {
+    const params = new URLSearchParams(searchParams);
+
+    if (isPromotionSelected) {
+      params.delete("promotion");
+    } else {
+      params.set("promotion", "true");
+    }
+
+    router.push(`${pathname}?${params.toString()}`);
+  }
+
+  function selectCategory(slug?: string) {
+    const params = new URLSearchParams(searchParams);
+
+    if (!slug) {
+      params.delete("category");
+    } else {
+      params.set("category", slug);
+    }
+
+    router.push(`${pathname}?${params.toString()}`);
+  }
+
   return (
     <section className="sticky top-16 z-40 border-b border-border bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/80">
       <div className="mx-auto flex h-16 max-w-7xl items-center gap-3 overflow-x-auto px-4 scrollbar-none">
@@ -28,26 +61,29 @@ export function ProductFilters({ categories }: ProductFiltersProps) {
           </DropdownMenuTrigger>
 
           <DropdownMenuContent align="start">
+            <DropdownMenuItem onClick={() => selectCategory()}>
+              Todas as categorias
+            </DropdownMenuItem>
             {categories.map((category) => (
-              <DropdownMenuItem key={category.id}>
+              <DropdownMenuItem
+                key={category.id}
+                onClick={() => selectCategory(category.slug)}
+                className={
+                  category.slug === selectedCategory ? "bg-accent" : ""
+                }
+              >
                 {category.name}
               </DropdownMenuItem>
             ))}
           </DropdownMenuContent>
         </DropdownMenu>
         <Button
-          variant="outline"
-          className="text-muted-foreground hover:text-brand-gold border-border hover:border-brand-gold/40"
+          variant={isPromotionSelected ? "default" : "outline"}
+          onClick={togglePromotion}
+          className="border-border"
         >
           <Percent />
           Promoções
-        </Button>
-        <Button
-          variant="outline"
-          className="text-muted-foreground hover:text-brand-gold border-border hover:border-brand-gold/40"
-        >
-          <Snowflake />
-          Geladas
         </Button>
       </div>
     </section>

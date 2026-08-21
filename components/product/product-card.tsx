@@ -1,4 +1,4 @@
-import Link from "next/link";
+"use client";
 
 import { Card, CardContent } from "@/components/ui/card";
 
@@ -28,7 +28,10 @@ export function ProductCard({ product }: ProductCardProps) {
           promotionalPrice={Number(product.promotionalPrice)}
         />
         <div className="flex justify-end items-end mt-auto">
-          <AddToCartButton disabled={!product.isAvailable} />
+          <AddToCartButton
+            disabled={!product.isAvailable}
+            productId={product.id}
+          />
         </div>
       </CardContent>
     </Card>

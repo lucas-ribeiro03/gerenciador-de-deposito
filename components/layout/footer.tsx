@@ -1,6 +1,9 @@
+"use client";
+
 import Link from "next/link";
 
 import { Logo } from "./logo";
+import { useCart } from "@/providers/cart-provider";
 
 export function Footer() {
   return (

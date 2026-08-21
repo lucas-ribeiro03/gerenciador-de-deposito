@@ -15,8 +15,15 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { useTransition } from "react";
 
 export function UserDropdown() {
+  const [_, startTransition] = useTransition();
+  function logout() {
+    startTransition(async () => {
+      await logoutAction();
+    });
+  }
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
@@ -50,7 +57,7 @@ export function UserDropdown() {
         <DropdownMenuSeparator />
 
         <DropdownMenuItem
-          onClick={() => logoutAction()}
+          onClick={logout}
           className="text-destructive focus:text-destructive"
         >
           <LogOut className="mr-2 size-4" />
