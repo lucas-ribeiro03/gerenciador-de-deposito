@@ -8,6 +8,7 @@ export default auth((req) => {
 
   const isAdminRoute = nextUrl.pathname.startsWith("/admin");
   const isLoginRoute = nextUrl.pathname === "/login";
+  const isCheckoutRoute = nextUrl.pathname === "/checkout";
 
   if (isAdminRoute && !isAuthenticated) {
     return NextResponse.redirect(new URL("/login", nextUrl));
@@ -23,9 +24,13 @@ export default auth((req) => {
     return NextResponse.redirect(new URL("/", nextUrl));
   }
 
+  if (isCheckoutRoute && !isAuthenticated) {
+    return NextResponse.redirect(new URL("/login", nextUrl));
+  }
+
   return NextResponse.next();
 });
 
 export const config = {
-  matcher: ["/admin/:path*", "/login"],
+  matcher: ["/admin/:path*", "/login", "/checkout"],
 };
