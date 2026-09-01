@@ -27,7 +27,7 @@ export async function Navbar() {
             <div className="flex items-center gap-3">
               {/* Endereço */}
 
-              <UserDropdown />
+              <UserDropdown user={session?.user} />
             </div>
           )}
           <CartButton />
