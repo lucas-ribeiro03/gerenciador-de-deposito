@@ -52,9 +52,8 @@ export default async function DashboardPage({
 
       <DashboardOrderOutcome data={orderOutcome} />
 
-      <div className="grid gap-6 lg:grid-cols-2">
+      <div className="grid min-w-0 gap-6 lg:grid-cols-2">
         <DashboardOrdersEvolutionChart data={evolution} />
-
         <DashboardRevenueEvolutionChart data={evolution} />
       </div>
     </main>
