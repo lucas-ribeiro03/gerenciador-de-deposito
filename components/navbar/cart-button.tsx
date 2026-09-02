@@ -4,20 +4,18 @@ import { ShoppingCart } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import type { CartItem } from "@/types/cart";
-import { useMemo, useState } from "react";
-import { useCart } from "@/providers/cart-provider";
 import { CartSheet } from "../cart/cart-sheet";
+import dynamic from "next/dynamic";
+import { useState } from "react";
+
+const CartCount = dynamic(
+  () => import("./cart-count").then((mod) => mod.CartCount),
+  {
+    ssr: false,
+  },
+);
 
 export function CartButton() {
-  const { items } = useCart();
-  const totalItems = useMemo(() => {
-    return items.reduce<number>(
-      (total: number, item: CartItem) => total + item.quantity,
-      0,
-    );
-  }, [items]);
-
   const [open, setOpen] = useState(false);
 
   return (
@@ -44,7 +42,7 @@ export function CartButton() {
         text-destructive-foreground
       "
         >
-          {totalItems}
+          <CartCount />
         </Badge>
       </Button>
       <CartSheet open={open} onOpenChange={setOpen} />
