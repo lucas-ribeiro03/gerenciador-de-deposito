@@ -20,7 +20,6 @@ export async function setDeliveryFee({ address }: SetDeliveryFeeParams) {
   }
 
   const distance = calculateDistance(customerCoordinates, STORE_COORDINATES);
-  console.log(distance);
 
   const deliveryFee = calculateDeliveryFee(distance);
 
