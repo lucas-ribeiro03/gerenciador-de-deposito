@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 import { updateCategoryStatusService } from "@/services/category/update-category-status-service";
 
@@ -11,7 +11,7 @@ export async function updateCategoryStatusAction(formData: FormData) {
     await updateCategoryStatusService({
       id,
     });
-
+    revalidateTag("categories:public", "max");
     revalidatePath("/admin/categories");
 
     return {
