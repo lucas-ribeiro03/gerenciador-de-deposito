@@ -26,6 +26,10 @@ export async function getDashboardSummaryService({
         gte,
         lte,
       },
+
+      status: {
+        not: "CANCELLED",
+      },
     },
 
     _count: {
