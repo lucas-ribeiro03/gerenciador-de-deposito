@@ -1,5 +1,3 @@
-"use client";
-
 import { Minus, Plus, Trash2 } from "lucide-react";
 import { useMemo } from "react";
 import { useRouter } from "next/navigation";
@@ -25,13 +23,12 @@ export function CartItems({ products }: CartItemsProps) {
   const subtotal = useMemo(() => {
     return products.reduce(
       (total: number, product: CartProduct) =>
-        total + Number(product.price) * product.quantity,
+        total + product.price * product.quantity,
       0,
     );
   }, [products]);
 
   function handleContinue() {
-    console.log(status);
     if (status === "authenticated") {
       router.push("/checkout");
       return;
@@ -84,7 +81,7 @@ export function CartItems({ products }: CartItemsProps) {
             </div>
 
             <div className="text-sm font-medium">
-              R$ {formatCurrency(Number(product.price))}
+              R$ {formatCurrency(product.price)}
             </div>
 
             <div className="flex items-center justify-center gap-1">
