@@ -21,6 +21,7 @@ type CartProviderProps = {
 
 export function CartProvider({ children }: CartProviderProps) {
   const [items, setItems] = useState<CartItem[]>(() => getCart());
+
   useEffect(() => {
     saveCart(items);
   }, [items]);
