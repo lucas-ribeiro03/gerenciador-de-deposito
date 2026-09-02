@@ -16,7 +16,13 @@ import { createOrderAction } from "@/actions/order/create-order-action";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
-export function FinishOrderSummary() {
+type FinishOrderSummaryProps = {
+  deliveryFeeAlreadyExists: number | null;
+};
+
+export function FinishOrderSummary({
+  deliveryFeeAlreadyExists,
+}: FinishOrderSummaryProps) {
   const router = useRouter();
   const { deliveryFee, deliveryMethod, setDeliveryFee } = useDelivery();
 
@@ -29,11 +35,17 @@ export function FinishOrderSummary() {
     async function loadProducts() {
       const cartProducts = await getCartProductsAction(items);
 
+      console.log(deliveryFee);
       setProducts(cartProducts);
     }
 
     loadProducts();
   }, [items]);
+
+  useEffect(() => {
+    console.log(deliveryFeeAlreadyExists);
+    if (deliveryFeeAlreadyExists) setDeliveryFee(deliveryFeeAlreadyExists);
+  });
 
   const subtotal = products.reduce(
     (total, product) => total + Number(product.price) * product.quantity,
@@ -86,7 +98,9 @@ export function FinishOrderSummary() {
 
             <span className="shrink-0 font-medium">
               {formatCurrency(
-                Number(product.promotionalPrice ?? product.price),
+                product.promotionalPrice
+                  ? product.promotionalPrice
+                  : product.price,
               )}
             </span>
           </div>
