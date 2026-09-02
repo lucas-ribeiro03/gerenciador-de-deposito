@@ -1,4 +1,15 @@
+"use cache";
 import { prisma } from "@/prisma/prisma";
+import { cacheTag } from "next/cache";
+
+export type PublicProduct = {
+  id: string;
+  name: string;
+  imageUrl: string;
+  price: number;
+  promotionalPrice: number | null;
+  isAvailable: boolean;
+};
 
 type GetPublicProductsServiceRequest = {
   category?: string;
@@ -10,8 +21,9 @@ export async function getPublicProductsService({
   category,
   promotion,
   search,
-}: GetPublicProductsServiceRequest) {
-  return prisma.product.findMany({
+}: GetPublicProductsServiceRequest): Promise<PublicProduct[]> {
+  cacheTag("products:public");
+  const products = await prisma.product.findMany({
     where: {
       isAvailable: true,
 
@@ -36,12 +48,26 @@ export async function getPublicProductsService({
       }),
     },
 
-    include: {
-      category: true,
+    select: {
+      id: true,
+      name: true,
+      imageUrl: true,
+      price: true,
+      promotionalPrice: true,
+      isAvailable: true,
     },
 
     orderBy: {
       createdAt: "desc",
     },
   });
+
+  return products.map((product) => ({
+    id: product.id,
+    name: product.name,
+    imageUrl: product.imageUrl,
+    price: product.price.toNumber(),
+    promotionalPrice: product.promotionalPrice?.toNumber() ?? null,
+    isAvailable: product.isAvailable,
+  }));
 }
