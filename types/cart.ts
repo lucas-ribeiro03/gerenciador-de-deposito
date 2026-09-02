@@ -1,18 +1,18 @@
-import type { Product } from "@prisma/client";
+import type { PublicProduct } from "@/services/product/get-public-products-service";
 
 export type CartItem = {
-  productId: Product["id"];
+  productId: string;
   quantity: number;
 };
 
 export type CartContextType = {
   items: CartItem[];
 
-  addItem: (productId: Product["id"]) => void;
-  removeItem: (productId: Product["id"]) => void;
+  addItem: (productId: PublicProduct["id"]) => void;
+  removeItem: (productId: PublicProduct["id"]) => void;
   clearCart: () => void;
 };
 
-export type CartProduct = Product & {
+export type CartProduct = PublicProduct & {
   quantity: number;
 };
