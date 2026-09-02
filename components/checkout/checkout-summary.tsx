@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 
 import { Button } from "@/components/ui/button";
 import type { CartProduct } from "@/types/cart";
@@ -27,10 +27,6 @@ export function CheckoutSummary({
   }, [products]);
 
   const { deliveryFee } = useDelivery();
-
-  useEffect(() => {
-    console.log(deliveryFee, "deliveryFee");
-  }, [deliveryFee]);
 
   return (
     <aside className="h-fit rounded-lg border p-6">
@@ -69,6 +65,7 @@ export function CheckoutSummary({
       <Button
         type="button"
         onClick={() => {
+          // eslint-disable-next-line @typescript-eslint/no-unused-expressions
           deliveryFee === null && deliveryMethod === "DELIVERY"
             ? toast.error("Frete ainda não calculado")
             : redirect("/finish-order");
