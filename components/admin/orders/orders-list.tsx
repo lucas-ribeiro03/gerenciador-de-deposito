@@ -2,12 +2,11 @@
 
 import { useState } from "react";
 
-import type { AdminOrder } from "@/services/order/get-all-orders-service";
-
 import { OrderCard } from "./order-card";
+import type { AdminOrderCard } from "@/services/order/get-admin-orders-service";
 
 type OrdersListProps = {
-  orders: AdminOrder[];
+  orders: AdminOrderCard[];
 };
 
 export function OrdersList({ orders }: OrdersListProps) {
