@@ -56,7 +56,9 @@ export function CheckoutSummary({
             <span className="font-semibold">Total</span>
 
             <span className="text-lg font-bold">
-              {formatCurrency(subtotal)}
+              {deliveryFee
+                ? formatCurrency(subtotal + deliveryFee)
+                : formatCurrency(subtotal)}
             </span>
           </div>
         </div>
