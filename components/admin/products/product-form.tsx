@@ -1,15 +1,12 @@
 "use client";
 
-import { useEffect, useState, useTransition } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { toast } from "react-hot-toast";
-
-import { CategoryStatus } from "@prisma/client";
-
 import {
   createProductSchema,
   type CreateProductSchema,
@@ -37,29 +34,14 @@ import { Textarea } from "@/components/ui/textarea";
 import { Loader2Icon } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { updateProductAction } from "@/actions/product/update-product-action";
-import type { Decimal } from "@prisma/client/runtime/client";
+import type { EditProduct } from "@/services/product/get-product-service";
 
 interface ProductFormProps {
-  product?: {
-    id: string;
-    name: string;
-    description: string | null;
-    imageUrl: string | null;
-    imagePublicId: string | null;
-    categoryId: string;
-    price: Decimal;
-    promotionalPrice: Decimal | null;
-    isAvailable: boolean;
-    category: {
-      name: string;
-    };
-  };
+  product?: EditProduct;
 
   categories: {
     id: string;
     name: string;
-    slug: string;
-    status: CategoryStatus;
   }[];
 }
 
@@ -67,8 +49,9 @@ export function ProductForm({ product, categories }: ProductFormProps) {
   const router = useRouter();
 
   const [image, setImage] = useState<File | null>(null);
+  
 
-  const [currentImage] = useState(product?.imageUrl ?? null);
+  // const [currentImage] = useState(product?.imageUrl ?? null);
 
   const form = useForm<CreateProductSchema>({
     resolver: zodResolver(createProductSchema),
@@ -193,15 +176,11 @@ export function ProductForm({ product, categories }: ProductFormProps) {
                 </SelectTrigger>
 
                 <SelectContent>
-                  {categories
-                    .filter(
-                      (category) => category.status === CategoryStatus.ACTIVE,
-                    )
-                    .map((category) => (
-                      <SelectItem key={category.id} value={category.name}>
-                        {category.name}
-                      </SelectItem>
-                    ))}
+                  {categories.map((category) => (
+                    <SelectItem key={category.id} value={category.name}>
+                      {category.name}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
 
@@ -245,7 +224,7 @@ export function ProductForm({ product, categories }: ProductFormProps) {
           <div className="flex items-center gap-3 rounded-xl border bg-card p-4">
             <Checkbox
               id="isAvailable"
-              className="size-4 accent-[var(--primary)]"
+              className="size-4 accent-(--primary)"
               checked={form.watch("isAvailable")}
               onCheckedChange={(checked) =>
                 form.setValue("isAvailable", checked === true)
