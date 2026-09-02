@@ -26,5 +26,7 @@ export async function getCartProductsService(
   return products.map((product) => ({
     ...product,
     quantity: quantityMap.get(product.id) ?? 1,
+    price: Number(product.price),
+    promotionalPrice: Number(product.promotionalPrice),
   }));
 }
