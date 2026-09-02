@@ -7,6 +7,7 @@ import { uploadImageService } from "@/services/uploads/upload-image-service";
 
 import { getProductService } from "@/services/product/get-product-service";
 import { updateProductService } from "@/services/product/update-product-service";
+import { revalidateTag } from "next/cache";
 
 interface UpdateProductActionProps {
   productId: string;
@@ -69,6 +70,15 @@ export async function updateProductAction({
         ? Number(data.promotionalPrice)
         : undefined,
     });
+
+    const categoryChanged = product.categoryId !== data.categoryId;
+    const availabilityChanged = product.isAvailable !== data.isAvailable;
+
+    revalidateTag("products:public", "max");
+
+    if (categoryChanged || availabilityChanged) {
+      revalidateTag("categories:public", "max");
+    }
 
     return {
       success: true,
