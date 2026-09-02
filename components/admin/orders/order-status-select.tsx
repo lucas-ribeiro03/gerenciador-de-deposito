@@ -53,7 +53,11 @@ export function OrderStatusSelect({
 
       <Select
         value={statusLabels[status]}
-        onValueChange={(value) => onChange(value as OrderStatus)}
+        onValueChange={(value) => {
+          if (!value) return;
+
+          onChange(value as OrderStatus);
+        }}
         disabled={disabled || isFinalStatus}
       >
         <SelectTrigger className="w-full">
