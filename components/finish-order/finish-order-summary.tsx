@@ -35,15 +35,13 @@ export function FinishOrderSummary({
     async function loadProducts() {
       const cartProducts = await getCartProductsAction(items);
 
-      console.log(deliveryFee);
       setProducts(cartProducts);
     }
 
     loadProducts();
-  }, [items]);
+  }, [deliveryFee, items]);
 
   useEffect(() => {
-    console.log(deliveryFeeAlreadyExists);
     if (deliveryFeeAlreadyExists) setDeliveryFee(deliveryFeeAlreadyExists);
   });
 
