@@ -79,14 +79,6 @@ export function OrderCard({ order, open, onOpenChange }: OrderCardProps) {
     });
   }
 
-  // const statusColors: Record<OrderStatus, string> = {
-  //   PENDING: "border-yellow-500/30",
-  //   CONFIRMED: "border-blue-500/30",
-  //   OUT_FOR_DELIVERY: "border-purple-500/30",
-  //   DELIVERED: "border-green-500/30",
-  //   CANCELLED: "border-red-500/30",
-  // };
-
   return (
     <>
       <Collapsible open={open} onOpenChange={onOpenChange}>
