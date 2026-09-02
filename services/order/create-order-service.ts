@@ -74,7 +74,9 @@ export async function createOrderService({
    * os preços reais encontrados no banco.
    */
   const orderItems = products.map((product) => {
-    const unitPrice = Number(product.promotionalPrice ?? product.price);
+    const unitPrice = Number(
+      product.promotionalPrice ? product.promotionalPrice : product.price,
+    );
 
     const total = unitPrice * product.quantity;
 
