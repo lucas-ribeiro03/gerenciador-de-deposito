@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 import { createCategoryService } from "@/services/category/create-category-service";
 import { categorySchema } from "@/schemas/category/category-schema";
@@ -20,6 +20,7 @@ export async function createCategoryAction(formData: FormData) {
   try {
     await createCategoryService(result.data);
 
+    revalidateTag("categories:public", "max");
     revalidatePath("/admin/categories");
 
     return {
