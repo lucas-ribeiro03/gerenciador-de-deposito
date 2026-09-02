@@ -33,6 +33,12 @@ export function CheckoutAddress({
 
   const [isCalculatingFee, setIsCalculatingFee] = useState(false);
 
+  function handleDeleteAddress(id: string) {
+    setAddresses((currentAddresses) => {
+      return currentAddresses.filter((address: Address) => address.id !== id);
+    });
+  }
+
   function handleSelectAddress(address: Address) {
     setSelectedAddress(address);
 
@@ -185,6 +191,7 @@ export function CheckoutAddress({
         selectedAddressId={selectedAddress?.id ?? null}
         onSelectAddress={handleSelectAddress}
         onAddressCreated={handleAddressCreated}
+        onDeleteAddress={handleDeleteAddress}
       />
     </>
   );
