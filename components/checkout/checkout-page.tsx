@@ -15,14 +15,23 @@ import { useDelivery } from "@/providers/deliveryFeeProvider";
 
 type CheckoutPageProps = {
   addresses: CheckoutAddressType[];
+  deliveryFeeAlreadyExists: number | null;
 };
 
-export function CheckoutPage({ addresses }: CheckoutPageProps) {
+export function CheckoutPage({
+  addresses,
+  deliveryFeeAlreadyExists,
+}: CheckoutPageProps) {
   const { items } = useCart();
 
   const [products, setProducts] = useState<CartProduct[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const { deliveryMethod, setDeliveryMethod } = useDelivery();
+  const { deliveryMethod, setDeliveryMethod, setDeliveryFee } = useDelivery();
+
+  useEffect(() => {
+    console.log(deliveryFeeAlreadyExists);
+    if (deliveryFeeAlreadyExists) setDeliveryFee(deliveryFeeAlreadyExists);
+  });
 
   useEffect(() => {
     async function loadProducts() {
