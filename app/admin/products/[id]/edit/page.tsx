@@ -1,9 +1,9 @@
 import { notFound } from "next/navigation";
 
-import { getCategoriesService } from "@/services/category/get-categories-service";
 import { getProductService } from "@/services/product/get-product-service";
 
 import { ProductForm } from "@/components/admin/products/product-form";
+import { getPublicCategoriesService } from "@/services/category/get-public-categories-service";
 
 interface EditProductPageProps {
   params: Promise<{
@@ -21,7 +21,7 @@ export default async function EditProductPage({
       productId: id,
     }),
 
-    getCategoriesService(),
+    getPublicCategoriesService(),
   ]);
 
   if (!product) {
