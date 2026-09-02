@@ -1,10 +1,8 @@
 import { ProductCard } from "@/components/product/product-card";
-import type { Product, Category } from "@prisma/client";
+import type { PublicProduct } from "@/services/product/get-public-products-service";
 
 interface ProductsGridProps {
-  products: (Product & {
-    category: Category;
-  })[];
+  products: PublicProduct[];
 }
 
 export function ProductsGrid({ products }: ProductsGridProps) {
@@ -21,7 +19,7 @@ export function ProductsGrid({ products }: ProductsGridProps) {
       </div>
 
       <div className="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-4">
-        {products.map((product) => (
+        {products.map((product: PublicProduct) => (
           <ProductCard key={product.id} product={product} />
         ))}
       </div>
