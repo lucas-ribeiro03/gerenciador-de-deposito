@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 import { categorySchema } from "@/schemas/category/category-schema";
 import { updateCategoryService } from "@/services/category/update-category-service";
@@ -24,7 +24,7 @@ export async function updateCategoryAction(formData: FormData) {
       id,
       ...result.data,
     });
-
+    revalidateTag("categories:public", "max");
     revalidatePath("/admin/categories");
 
     return {
