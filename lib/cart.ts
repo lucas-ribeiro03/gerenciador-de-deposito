@@ -1,3 +1,4 @@
+"use client";
 import type { CartItem } from "@/types/cart";
 
 const CART_STORAGE_KEY = "point-do-grell:cart";
