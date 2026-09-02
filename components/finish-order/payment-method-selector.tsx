@@ -47,7 +47,7 @@ export function PaymentMethodSelector({
           <RadioGroupItem value="DEBIT_CARD" id="payment-debit-card" />
 
           <Label htmlFor="payment-card" className="cursor-pointer">
-            Cartão
+            Cartão de débito
           </Label>
         </div>
 
