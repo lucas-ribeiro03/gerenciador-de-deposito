@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 import { deleteImageService } from "@/services/uploads/delete-image-service";
 import { deleteProductService } from "@/services/product/delete-product-service";
@@ -11,6 +11,10 @@ export async function deleteProductAction(productId: string) {
 
     if (product.imagePublicId) {
       await deleteImageService(product.imagePublicId);
+    }
+    if (product.isAvailable) {
+      revalidateTag("products:public", "max");
+      revalidateTag("categories:public", "max");
     }
 
     revalidatePath("/admin/products");
