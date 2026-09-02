@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 import { createProductSchema } from "@/schemas/product/create-product-schema";
 
@@ -52,7 +52,8 @@ export async function createProductAction(formData: FormData) {
 
       isAvailable: data.isAvailable,
     });
-
+    revalidateTag("products:public", "max");
+    revalidateTag("categories:public", "max");
     revalidatePath("/admin/products");
 
     return {
