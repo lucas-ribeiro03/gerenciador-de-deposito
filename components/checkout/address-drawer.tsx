@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { Check, MapPin, Plus } from "lucide-react";
+import { useState, useTransition } from "react";
+import { Check, MapPin, Plus, TrashIcon } from "lucide-react";
 
 import {
   Sheet,
@@ -17,6 +17,8 @@ import type { CheckoutAddress } from "@/types/address";
 import type { CreatedAddress } from "@/actions/address/create-address-action";
 
 import { CreateAddressDialog } from "./create-address-dialog";
+import { deleteAddressAction } from "@/actions/address/delete-address-action";
+import toast from "react-hot-toast";
 
 type AddressDrawerProps = {
   open: boolean;
@@ -25,6 +27,7 @@ type AddressDrawerProps = {
   selectedAddressId: string | null;
   onSelectAddress: (address: CheckoutAddress) => void;
   onAddressCreated: (address: CreatedAddress) => void;
+  onDeleteAddress: (id: string) => void;
 };
 
 export function AddressDrawer({
@@ -34,11 +37,31 @@ export function AddressDrawer({
   selectedAddressId,
   onSelectAddress,
   onAddressCreated,
+  onDeleteAddress,
 }: AddressDrawerProps) {
   const [createAddressOpen, setCreateAddressOpen] = useState(false);
+  const [, startTransition] = useTransition();
 
   function handleAddressCreated(address: CreatedAddress) {
     onAddressCreated(address);
+  }
+
+  function handleDeleteAddress(
+    id: string,
+    e: React.MouseEvent<HTMLDivElement>,
+  ) {
+    e.stopPropagation();
+    startTransition(async () => {
+      const result = await deleteAddressAction(id);
+      if (!result.success) {
+        toast.error(result.message);
+        return;
+      }
+
+      toast.success(result.message);
+    });
+
+    onDeleteAddress(id);
   }
 
   return (
@@ -116,6 +139,16 @@ export function AddressDrawer({
                           <Check className="size-3" />
                         </div>
                       )}
+
+                      <div
+                        className="size-8 text-destructive hover:text-destructive"
+                        onClick={(e) => {
+                          handleDeleteAddress(address.id, e);
+                        }}
+                      >
+                        <TrashIcon className="size-4" />
+                        <span className="sr-only">Excluir endereço</span>
+                      </div>
                     </div>
                   </button>
                 );
