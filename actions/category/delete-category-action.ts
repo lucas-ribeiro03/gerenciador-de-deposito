@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 import { deleteCategoryService } from "@/services/category/delete-category-service";
 
@@ -11,7 +11,7 @@ export async function deleteCategoryAction(formData: FormData) {
     await deleteCategoryService({
       id,
     });
-
+    revalidateTag("categories:public", "max");
     revalidatePath("/admin/categories");
 
     return {
