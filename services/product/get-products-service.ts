@@ -1,7 +1,21 @@
 import { prisma } from "@/prisma/prisma";
 
-export async function getProductsService() {
-  return prisma.product.findMany({
+export type AdminProduct = {
+  id: string;
+  imageUrl: string;
+  name: string;
+  description: string | null;
+  price: number;
+  promotionalPrice: number | null;
+  isAvailable: boolean;
+  category: {
+    id: string;
+    name: string;
+  };
+};
+
+export async function getProductsService(): Promise<AdminProduct[]> {
+  const products = await prisma.product.findMany({
     select: {
       id: true,
       imageUrl: true,
@@ -10,10 +24,11 @@ export async function getProductsService() {
       price: true,
       promotionalPrice: true,
       isAvailable: true,
+
       category: {
         select: {
-          name: true,
           id: true,
+          name: true,
         },
       },
     },
@@ -22,4 +37,19 @@ export async function getProductsService() {
       createdAt: "desc",
     },
   });
+
+  return products.map((product) => ({
+    id: product.id,
+    imageUrl: product.imageUrl,
+    name: product.name,
+    description: product.description,
+    price: product.price.toNumber(),
+    promotionalPrice: product.promotionalPrice?.toNumber() ?? null,
+    isAvailable: product.isAvailable,
+
+    category: {
+      id: product.category.id,
+      name: product.category.name,
+    },
+  }));
 }
