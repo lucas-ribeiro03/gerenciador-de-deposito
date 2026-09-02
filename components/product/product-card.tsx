@@ -5,12 +5,10 @@ import { Card, CardContent } from "@/components/ui/card";
 import { AddToCartButton } from "./add-to-cart-button";
 import { ProductImage } from "./product-image";
 import { ProductPrice } from "./product-price";
-import type { Category, Product } from "@prisma/client";
+import type { PublicProduct } from "@/services/product/get-public-products-service";
 
 export type ProductCardProps = {
-  product: Product & {
-    category: Category;
-  };
+  product: PublicProduct;
 };
 
 export function ProductCard({ product }: ProductCardProps) {
