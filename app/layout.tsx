@@ -6,6 +6,8 @@ import { QueryProvider } from "@/providers/query-provider";
 import { CartProvider } from "@/providers/cart-provider";
 import { SessionProvider } from "next-auth/react";
 import { DeliveryProvider } from "@/providers/deliveryFeeProvider";
+import { Suspense } from "react";
+import { LoaderIcon } from "lucide-react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,7 +36,9 @@ export default async function RootLayout({
           <QueryProvider>
             <DeliveryProvider>
               <CartProvider>
-                {children}
+                <Suspense fallback={<LoaderIcon className="animate-spin" />}>
+                  {children}
+                </Suspense>
 
                 <Toaster
                   position="top-center"
