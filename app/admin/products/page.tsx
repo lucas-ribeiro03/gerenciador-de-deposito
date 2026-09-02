@@ -2,6 +2,7 @@ import { getProductsService } from "@/services/product/get-products-service";
 
 import { ProductsTable } from "@/components/admin/products/products-table";
 import { NewProductButton } from "@/components/admin/products/new-product-button";
+import { ProductsTableMobile } from "@/components/admin/products/products-table-mobile";
 
 export default async function ProductsPage() {
   const products = await getProductsService();
@@ -18,7 +19,13 @@ export default async function ProductsPage() {
         <NewProductButton />
       </div>
 
-      <ProductsTable products={products} />
+      <div className="hidden lg:block">
+        <ProductsTable products={products} />
+      </div>
+
+      <div className="lg:hidden">
+        <ProductsTableMobile products={products} />
+      </div>
     </div>
   );
 }
