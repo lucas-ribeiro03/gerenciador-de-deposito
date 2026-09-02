@@ -1,8 +1,6 @@
 "use client";
 
-import { ChevronDown, Router } from "lucide-react";
-
-import type { AdminOrder } from "@/services/order/get-all-orders-service";
+import { ChevronDown } from "lucide-react";
 
 import { formatCurrency } from "@/lib/formatters/currency";
 
@@ -20,9 +18,10 @@ import { UpdateOrderStatusDialog } from "./update-order-status-dialog";
 import { updateOrderStatusAction } from "@/actions/order/update-order-status-action";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import type { AdminOrderCard } from "@/services/order/get-admin-orders-service";
 
 type OrderCardProps = {
-  order: AdminOrder;
+  order: AdminOrderCard;
   open: boolean;
   onOpenChange: (open: boolean) => void;
 };
@@ -80,13 +79,13 @@ export function OrderCard({ order, open, onOpenChange }: OrderCardProps) {
     });
   }
 
-  const statusColors: Record<OrderStatus, string> = {
-    PENDING: "border-yellow-500/30",
-    CONFIRMED: "border-blue-500/30",
-    OUT_FOR_DELIVERY: "border-purple-500/30",
-    DELIVERED: "border-green-500/30",
-    CANCELLED: "border-red-500/30",
-  };
+  // const statusColors: Record<OrderStatus, string> = {
+  //   PENDING: "border-yellow-500/30",
+  //   CONFIRMED: "border-blue-500/30",
+  //   OUT_FOR_DELIVERY: "border-purple-500/30",
+  //   DELIVERED: "border-green-500/30",
+  //   CANCELLED: "border-red-500/30",
+  // };
 
   return (
     <>
@@ -242,16 +241,6 @@ export function OrderCard({ order, open, onOpenChange }: OrderCardProps) {
 
                     <span>{formatCurrency(Number(order.subtotal))}</span>
                   </div>
-
-                  {Number(order.discount) > 0 && (
-                    <div className="flex justify-between gap-4">
-                      <span className="text-muted-foreground">Desconto</span>
-
-                      <span className="text-green-600">
-                        -{formatCurrency(Number(order.discount))}
-                      </span>
-                    </div>
-                  )}
 
                   <div className="flex justify-between gap-4">
                     <span className="text-muted-foreground">Frete</span>
