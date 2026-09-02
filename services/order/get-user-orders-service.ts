@@ -1,5 +1,5 @@
 import { prisma } from "@/prisma";
-import type { OrderStatus } from "@prisma/client";
+import type { OrderStatus, PaymentMethod } from "@prisma/client";
 
 export type UserOrder = {
   id: string;
@@ -31,7 +31,7 @@ export type UserOrder = {
   total: number;
 
   deliveryType: string;
-  paymentMethod: string;
+  paymentMethod: PaymentMethod;
 };
 
 export async function getUserOrdersService(
