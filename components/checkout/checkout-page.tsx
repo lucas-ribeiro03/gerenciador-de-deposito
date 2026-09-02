@@ -29,7 +29,6 @@ export function CheckoutPage({
   const { deliveryMethod, setDeliveryMethod, setDeliveryFee } = useDelivery();
 
   useEffect(() => {
-    console.log(deliveryFeeAlreadyExists);
     if (deliveryFeeAlreadyExists) setDeliveryFee(deliveryFeeAlreadyExists);
   });
 
