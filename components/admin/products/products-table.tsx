@@ -12,22 +12,10 @@ import {
 import { EmptyProducts } from "./empty-products";
 import { ProductRowActions } from "./product-row-action";
 import { formatCurrency } from "@/lib/formatters/currency";
-import type { Decimal } from "@prisma/client/runtime/client";
 import { Badge } from "@/components/ui/badge";
+import type { AdminProduct } from "@/services/product/get-products-service";
 interface ProductsTableProps {
-  products: {
-    id: string;
-    imageUrl: string;
-    name: string;
-    description: string | null;
-    price: Decimal;
-    promotionalPrice: Decimal | null;
-    isAvailable: boolean;
-    category: {
-      id: string;
-      name: string;
-    };
-  }[];
+  products: AdminProduct[];
 }
 
 export function ProductsTable({ products }: ProductsTableProps) {
