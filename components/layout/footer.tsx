@@ -35,10 +35,29 @@ export function Footer() {
           </Link>
         </nav>
 
-        <span className="text-center text-xs text-muted-foreground">
-          © {new Date().getFullYear()} Point do Grell. Todos os direitos
-          reservados.
-        </span>
+        <p>
+          © 2026{" "}
+          <a
+            href="https://github.com/lucas-ribeiro03"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Lucas Ribeiro
+          </a>{" "}
+          · Todos os direitos reservados.
+        </p>
+
+        <p>
+          Desenvolvido por{" "}
+          <a
+            href="https://github.com/lucas-ribeiro03"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Lucas Ribeiro
+          </a>
+          .
+        </p>
       </div>
     </footer>
   );
