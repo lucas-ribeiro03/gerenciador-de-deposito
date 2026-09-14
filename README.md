@@ -1,4 +1,4 @@
-# Point do Grell — Gerenciador de Depósito
+# Gerenciador de Depósito
 
 Aplicação web full-stack para gerenciamento de produtos, categorias, pedidos e entregas de um depósito. O projeto simula uma operação completa: clientes consultam o catálogo, montam o carrinho e finalizam pedidos; administradores acompanham indicadores, organizam o catálogo e atualizam o status dos pedidos.
 
@@ -140,7 +140,7 @@ A configuração padrão do container utiliza:
 | --- | --- |
 | Usuário | `postgres` |
 | Senha | `password` |
-| Banco | `point_do_grell` |
+| Banco | `dsmanager` |
 | Porta | `5432` |
 
 ### 4. Configure as variáveis de ambiente
