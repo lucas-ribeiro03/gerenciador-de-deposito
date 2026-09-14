@@ -6,6 +6,96 @@ datasource db {
   provider = "postgresql"
 }
 
+model Product {
+  id               String      @id @default(uuid())
+  name             String
+  description      String?
+  categoryId       String
+  price            Decimal     @db.Decimal(10, 2)
+  promotionalPrice Decimal?    @db.Decimal(10, 2)
+  isAvailable      Boolean     @default(true)
+  isPackable       Boolean     @default(false)
+  packQuantity     Int?
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+  imagePublicId    String
+  imageUrl         String
+  orderItems       OrderItem[]
+  category         Category    @relation(fields: [categoryId], references: [id])
+}
+
+model User {
+  id        String    @id @default(uuid())
+  name      String
+  email     String    @unique
+  phone     String
+  password  String
+  role      UserRole  @default(CLIENT)
+  createdAt DateTime  @default(now())
+  addresses Address[]
+  orders    Order[]
+}
+
+model Order {
+  id            String        @id @default(cuid())
+  userId        String
+  addressId     String?
+  status        OrderStatus   @default(PENDING)
+  deliveryType  DeliveryType
+  paymentMethod PaymentMethod
+  subtotal      Decimal       @db.Decimal(10, 2)
+  deliveryFee   Decimal       @db.Decimal(10, 2)
+  discount      Decimal       @db.Decimal(10, 2)
+  total         Decimal       @db.Decimal(10, 2)
+  createdAt     DateTime      @default(now())
+  address       Address?      @relation(fields: [addressId], references: [id])
+  user          User          @relation(fields: [userId], references: [id])
+  items         OrderItem[]
+}
+
+model OrderItem {
+  id        String  @id @default(uuid())
+  orderId   String
+  productId String
+  quantity  Int
+  unitPrice Decimal @db.Decimal(10, 2)
+  total     Decimal @db.Decimal(10, 2)
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product   Product @relation(fields: [productId], references: [id])
+}
+
+model Address {
+  id         String    @id @default(uuid())
+  userId     String
+  street     String
+  number     String
+  district   String
+  zipCode    String
+  complement String?
+  createdAt  DateTime  @default(now())
+  lastUsedAt DateTime?
+  title      String?
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  orders     Order[]
+}
+
+model Category {
+  id        String         @id @default(uuid())
+  name      String
+  slug      String         @unique
+  status    CategoryStatus @default(ACTIVE)
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+  products  Product[]
+}
+
+model Settings {
+  id        String  @id @default(uuid())
+  isOpen    Boolean @default(true)
+  openTime  String?
+  closeTime String?
+}
+
 enum UserRole {
   ADMIN
   EMPLOYEE
@@ -35,121 +125,4 @@ enum PaymentMethod {
   CREDIT_CARD
   DEBIT_CARD
   MONEY
-}
-
-model Product {
-  id               String   @id @default(uuid())
-  name             String
-  description      String?
-  categoryId       String
-  price            Decimal  @db.Decimal(10, 2)
-  promotionalPrice Decimal? @db.Decimal(10, 2)
-  imageUrl         String
-  imagePublicId    String
-  isAvailable      Boolean  @default(true)
-  isPackable       Boolean  @default(false)
-  packQuantity     Int?
-
-  category Category @relation(fields: [categoryId], references: [id], onDelete: Restrict)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  orderItems OrderItem[]
-}
-
-model User {
-  id       String   @id @default(uuid())
-  name     String
-  email    String   @unique
-  phone    String
-  password String
-  role     UserRole @default(CLIENT)
-
-  createdAt DateTime @default(now())
-
-  addresses Address[]
-  orders    Order[]
-}
-
-model Order {
-  id String @id @default(cuid())
-
-  userId    String
-  addressId String?
-
-  status       OrderStatus  @default(PENDING)
-  deliveryType DeliveryType
-
-  paymentMethod PaymentMethod
-
-  subtotal    Decimal @db.Decimal(10, 2)
-  deliveryFee Decimal @db.Decimal(10, 2)
-  discount    Decimal @db.Decimal(10, 2)
-  total       Decimal @db.Decimal(10, 2)
-
-  createdAt DateTime @default(now())
-
-  user    User     @relation(fields: [userId], references: [id])
-  address Address? @relation(fields: [addressId], references: [id])
-
-  items OrderItem[]
-}
-
-model OrderItem {
-  id String @id @default(uuid())
-
-  orderId   String
-  productId String
-
-  quantity Int
-
-  unitPrice Decimal @db.Decimal(10, 2)
-  total     Decimal @db.Decimal(10, 2)
-
-  order   Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  product Product @relation(fields: [productId], references: [id])
-}
-
-model Address {
-  id String @id @default(uuid())
-
-  userId String
-
-  title     String?
-
-  street     String
-  number     String
-  district   String
-  zipCode    String
-  complement String?
-
-  lastUsedAt DateTime? 
-
-  createdAt DateTime @default(now())
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  orders Order[]
-}
-
-
-
-model Category {
-  id        String         @id @default(uuid())
-  name      String
-  slug      String         @unique
-  status    CategoryStatus @default(ACTIVE)
-
-  products  Product[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model Settings {
-  id        String  @id @default(uuid())
-  isOpen    Boolean @default(true)
-  openTime  String?
-  closeTime String?
 }
